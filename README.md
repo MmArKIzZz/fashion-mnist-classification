@@ -132,6 +132,6 @@ curl -X POST "http://localhost:8000/predict" \
 
 ## Ссылки
 
-- **GitHub-репозиторий:** *ваша ссылка*
-- **API (Render.com):** *ваша ссылка*
-- **Streamlit-интерфейс:** *ваша ссылка*
+- **GitHub-репозиторий:** *(https://github.com/MmArKIzZz/fashion-mnist-classification)*
+- **API (Render.com):** *https://fashion-mnist-classification-3fcp.onrender.com*
+- **Streamlit-интерфейс:** *https://fashion-mnist-classification-mmcl7ary4lappw4evkmappbm.streamlit.app/*
