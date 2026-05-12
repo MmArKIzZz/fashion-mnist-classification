@@ -32,7 +32,7 @@ CLASS_NAMES = [
     "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot",
 ]
 
-tab_upload, tab_draw = st.tabs(["Загрузить изображение", "Нарисовать"])
+tab_upload, tab_draw = st.tabs(["Загрузить изображение"])
 
 image_to_send = None
 
