@@ -1,6 +1,6 @@
 """
 Streamlit-приложение для классификации изображений Fashion MNIST.
-Позволяет загружать изображение или рисовать на холсте, отправляет на API
+Позволяет загружать изображение, отправляет на API
 и отображает результаты классификации.
 """
 
@@ -11,12 +11,11 @@ import numpy as np
 from PIL import Image
 import plotly.express as px
 import pandas as pd
-from streamlit_drawable_canvas import st_canvas
 
 API_URL = st.sidebar.text_input(
     "API URL",
-    value="https://your-api.onrender.com",
-    help="Адрес развернутого FastAPI-бэкенда (например, https://your-app.onrender.com)",
+    value="https://fashion-mnist-classification-3fcp.onrender.com",
+    help="Адрес развернутого FastAPI-бэкенда",
 )
 
 st.title("Fashion MNIST Classifier")
@@ -32,20 +31,15 @@ CLASS_NAMES = [
     "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot",
 ]
 
-tab_upload, tab_draw = st.tabs(["Загрузить изображение"])
-
 image_to_send = None
 
-with tab_upload:
-    uploaded_file = st.file_uploader(
-        "Выберите изображение", type=["png", "jpg", "jpeg", "bmp", "webp"]
-    )
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        st.image(image, caption="Загруженное изображение", width=200)
-        image_to_send = uploaded_file.getvalue()
-
-
+uploaded_file = st.file_uploader(
+    "Выберите изображение", type=["png", "jpg", "jpeg", "bmp", "webp"]
+)
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    st.image(image, caption="Загруженное изображение", width=200)
+    image_to_send = uploaded_file.getvalue()
 
 if st.button("Классифицировать", type="primary", disabled=image_to_send is None):
     if image_to_send is None:
