@@ -45,30 +45,11 @@ with tab_upload:
         st.image(image, caption="Загруженное изображение", width=200)
         image_to_send = uploaded_file.getvalue()
 
-with tab_draw:
-    st.markdown("Нарисуйте предмет одежды на холсте (белым по чёрному фону):")
-    canvas_result = st_canvas(
-        fill_color="rgba(255, 255, 255, 0)",
-        stroke_width=18,
-        stroke_color="#FFFFFF",
-        background_color="#000000",
-        height=280,
-        width=280,
-        drawing_mode="freedraw",
-        key="canvas",
-    )
-    if canvas_result.image_data is not None:
-        drawn = canvas_result.image_data[:, :, :3]
-        if np.any(drawn > 0):
-            img_pil = Image.fromarray(drawn.astype(np.uint8)).convert("L")
-            st.image(img_pil, caption="Ваш рисунок (grayscale)", width=150)
-            buf = io.BytesIO()
-            img_pil.save(buf, format="PNG")
-            image_to_send = buf.getvalue()
+
 
 if st.button("Классифицировать", type="primary", disabled=image_to_send is None):
     if image_to_send is None:
-        st.warning("Сначала загрузите или нарисуйте изображение.")
+        st.warning("Сначала загрузите изображение.")
     else:
         predict_url = API_URL.rstrip("/") + "/predict"
         with st.spinner("Отправка на сервер..."):
