@@ -56,10 +56,20 @@ def load_model():
 
 
 def preprocess_image(image_bytes: bytes) -> np.ndarray:
-    """Преобразует загруженное изображение в формат 28x28 grayscale, нормализует."""
+    """Преобразует загруженное изображение в формат 28x28 grayscale, нормализует.
+
+    Fashion MNIST: белый объект на чёрном фоне.
+    Если входное изображение имеет светлый фон (>50% ярких пикселей),
+    инвертируем его, чтобы привести к формату датасета.
+    """
     img = Image.open(io.BytesIO(image_bytes)).convert("L")
-    img = img.resize((28, 28))
+    img = img.resize((28, 28), Image.LANCZOS)
     arr = np.array(img, dtype=np.float32) / 255.0
+
+    # Автоматическая инверсия: если фон светлый, инвертируем
+    if np.mean(arr) > 0.5:
+        arr = 1.0 - arr
+
     arr = arr.reshape(1, 28, 28, 1)
     return arr
 
